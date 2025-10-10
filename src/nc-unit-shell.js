@@ -5,8 +5,8 @@
 
 (() => {
   // ===================== CONFIG =====================
-  const EFFECTIVE_CACHE_VERSION = readGlobalCacheVersion();
-  const CACHE_PREFIX = `nc_unitCache_${EFFECTIVE_CACHE_VERSION}_`;
+  const CACHE_VERSION = readGlobalCacheVersion();
+  const CACHE_PREFIX = `nc_unitCache_${CACHE_VERSION}_`;
   const CACHE_TTL_MS = readGlobalCacheTTL();
   const LAST_UNIT_KEY = "nc_lastUnit";
 
@@ -246,7 +246,7 @@
         localStorage.removeItem(LAST_UNIT_KEY);
       } catch {}
     },
-    cacheVersion: EFFECTIVE_CACHE_VERSION,
+    cacheVersion: CACHE_VERSION,
     cacheTTL: CACHE_TTL_MS,
   };
 })();
