@@ -5,32 +5,6 @@
 
 (() => {
   // ===================== CONFIG =====================
-  // Versão e duração do cache controláveis por projeto (via window.UnitShellConfig)
-  function readGlobalCacheVersion() {
-    try {
-      if (
-        window.UnitShellConfig &&
-        typeof window.UnitShellConfig.cacheVersion === "string"
-      ) {
-        return window.UnitShellConfig.cacheVersion;
-      }
-    } catch {}
-    return "v1";
-  }
-
-  function readGlobalCacheTTL() {
-    try {
-      if (
-        window.UnitShellConfig &&
-        typeof window.UnitShellConfig.cacheTTL === "number"
-      ) {
-        return window.UnitShellConfig.cacheTTL;
-      }
-    } catch {}
-    // fallback: 12h
-    return 1000 * 60 * 60 * 12;
-  }
-
   const EFFECTIVE_CACHE_VERSION = readGlobalCacheVersion();
   const CACHE_PREFIX = `nc_unitCache_${EFFECTIVE_CACHE_VERSION}_`;
   const CACHE_TTL_MS = readGlobalCacheTTL();
@@ -65,14 +39,40 @@
     }
   }
 
+  // Versão e duração do cache controláveis por projeto (via window.UnitShellConfig)
+  function readGlobalCacheVersion() {
+    try {
+      if (
+        window.UnitShellConfig &&
+        typeof window.UnitShellConfig.cacheVersion === "string"
+      ) {
+        return window.UnitShellConfig.cacheVersion;
+      }
+    } catch {}
+    return "v1";
+  }
+
+  function readGlobalCacheTTL() {
+    try {
+      if (
+        window.UnitShellConfig &&
+        typeof window.UnitShellConfig.cacheTTL === "number"
+      ) {
+        return window.UnitShellConfig.cacheTTL;
+      }
+    } catch {}
+    // fallback: 12h
+    return 1000 * 60 * 60 * 12;
+  }
+
   // Monta URL da unidade, priorizando data-unit-base; se ausente, usa config global; senão fallback.
   function buildUnitURL(slug, baseFromDOM = null) {
     if (baseFromDOM) return `${String(baseFromDOM).replace(/\/$/, "")}/${slug}`;
     if (
       window.UnitShellConfig &&
-      typeof window.UnitShellConfig.unitPathPrefix === "function"
+      typeof window.UnitShellConfig.unitPathPrefix === "string"
     ) {
-      return String(window.UnitShellConfig.unitPathPrefix(slug));
+      return `${window.UnitShellConfig.unitPathPrefix.replace(/\/$/, "")}/${slug}`;
     }
     return `/${slug}`;
   }
