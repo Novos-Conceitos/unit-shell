@@ -24,19 +24,3 @@ Configure antes do `src`:
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@novos-conceitos/unit-shell@latest/dist/nc-unit-shell.min.js" defer></script>
 ```
-
-## Build local
-```bash
-npm install
-npm run build
-```
-
-## Publicação
-```bash
-npm login
-npm run release:patch   # ou :minor / :major
-```
-
-## Arquivos gerados
-- dist/nc-unit-shell.js (não minificado)
-- dist/nc-unit-shell.min.js (minificado, padrão em CDNs)
