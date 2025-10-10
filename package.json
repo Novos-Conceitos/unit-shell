@@ -1,6 +1,6 @@
 {
   "name": "@novos-conceitos/unit-shell",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gerencia navbar e footer dinâmicos por unidade em projetos Webflow, com cache, reescrita de âncoras e fetch de componentes.",
   "main": "dist/nc-unit-shell.js",
   "unpkg": "dist/nc-unit-shell.min.js",
@@ -20,6 +20,9 @@
     "type": "git",
     "url": "https://github.com/Novos-Conceitos/unit-shell.git"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "bugs": {
     "url": "https://github.com/Novos-Conceitos/unit-shell/issues"
   },
@@ -38,6 +41,6 @@
     "release:major": "npm version major && npm publish --access public"
   },
   "devDependencies": {
-    "esbuild": "^0.24.0"
+    "esbuild": "^0.25.10"
   }
 }
