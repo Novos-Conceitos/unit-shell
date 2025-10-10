@@ -17,10 +17,16 @@ Configure antes do `src`:
 ```html
 <script>
   window.UnitShellConfig = {
-    cacheVersion: 'proj-v1',
-    cacheTTL: 1000 * 60 * 60 * 24 * 7,
-    unitPathPrefix: (slug) => `/unidade/${slug}`
+    ...
   };
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@novos-conceitos/unit-shell@latest/dist/nc-unit-shell.min.js" defer></script>
 ```
+Configurações Opcionais
+```javascript
+window.UnitShellConfig = {
+    unitPathPrefix: '/unidades',
+    cacheVersion: 'v1',
+    cacheTTL: 1000 * 60 * 60 * 12
+};
+````
