@@ -129,30 +129,49 @@
   }
 
   // ===================== ANCHORS =====================
-  // Reescreve apenas âncoras locais (#id e /#id)
+  // Reescreve links locais da unidade:
+  // #id                  -> /unidades/slug#id
+  // /#id                 -> /unidades/slug#id
+  // ?param=valor         -> /unidades/slug?param=valor
+  // /?param=valor        -> /unidades/slug?param=valor
+  // ?param=valor#id      -> /unidades/slug?param=valor#id
+  // /?param=valor#id     -> /unidades/slug?param=valor#id
   function rewriteSelfAnchors(containerEl, lastUnit) {
     const baseURL = buildUnitURL(lastUnit.slug, lastUnit.base);
+
     containerEl.querySelectorAll("a[href]").forEach((a) => {
       const raw = (a.getAttribute("href") || "").trim();
       if (!raw) return;
 
       const lower = raw.toLowerCase();
+
       if (
         lower.startsWith("http://") ||
         lower.startsWith("https://") ||
         lower.startsWith("mailto:") ||
         lower.startsWith("tel:") ||
         lower.startsWith("javascript:")
-      )
+      ) {
         return;
+      }
 
       if (raw === "#") return;
-      if (raw.startsWith("#")) {
+
+      // Casos diretos: #ancora, ?param=valor, ?param=valor#ancora
+      if (raw.startsWith("#") || raw.startsWith("?")) {
         a.setAttribute("href", `${baseURL}${raw}`);
         return;
       }
-      if (raw.startsWith("/#")) {
+
+      // Casos vindos da raiz: /#ancora, /?param=valor, /?param=valor#ancora
+      if (raw.startsWith("/#") || raw.startsWith("/?")) {
         a.setAttribute("href", `${baseURL}${raw.slice(1)}`);
+        return;
+      }
+
+      // Casos relativos: ./#ancora, ./?param=valor
+      if (raw.startsWith("./#") || raw.startsWith("./?")) {
+        a.setAttribute("href", `${baseURL}${raw.slice(2)}`);
         return;
       }
     });
